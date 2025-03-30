@@ -70,15 +70,18 @@
                     @if ($order->order_type == 'delivery')
                         <div>
                             @if ($order->deliveryExecutive)
-                                <div class="font-semibold text-gray-700 dark:text-gray-300 text-sm inline-flex flex-col gap-1">
+                                <div
+                                    class="font-semibold text-gray-700 dark:text-gray-300 text-sm inline-flex flex-col gap-1">
                                     <div class="text-xs font-medium">@lang('modules.order.deliveryExecutive')</div>
                                     <div class="text-sm">{{ $order->deliveryExecutive->name }}</div>
                                 </div>
                             @else
-                                <x-select class="text-sm w-full" wire:model.live='deliveryExecutive' wire:change='saveDeliveryExecutive'>
+                                <x-select class="text-sm w-full" wire:model.live='deliveryExecutive'
+                                    wire:change='saveDeliveryExecutive'>
                                     <option value="">@lang('modules.order.selectDeliveryExecutive')</option>
                                     @foreach ($deliveryExecutives as $deliveryExecutive)
-                                        <option value="{{ $deliveryExecutive->id }}">{{ $deliveryExecutive->name }}</option>
+                                        <option value="{{ $deliveryExecutive->id }}">{{ $deliveryExecutive->name }}
+                                        </option>
                                     @endforeach
                                 </x-select>
                             @endif
@@ -153,16 +156,18 @@
                                             {{ isset($item->menuItemVariation) ? $item->menuItemVariation->variation : '' }}
                                         </div>
 
-                                        @if($item->modifierOptions->isNotEmpty())
-                                        <div class="text-xs text-gray-600 dark:text-white">
-                                            @foreach ($item->modifierOptions as $modifier)
-                                            <div
-                                                class="flex items-center justify-between text-xs mb-1 py-0.5 px-1 border-l-2 border-blue-500 bg-gray-200 dark:bg-gray-900 rounded-md">
-                                                <span class="text-gray-900 dark:text-white">{{ $modifier->name }}</span>
-                                                <span class="text-gray-600 dark:text-gray-300">{{ currency_format($modifier->price) }}</span>
+                                        @if ($item->modifierOptions->isNotEmpty())
+                                            <div class="text-xs text-gray-600 dark:text-white">
+                                                @foreach ($item->modifierOptions as $modifier)
+                                                    <div
+                                                        class="flex items-center justify-between text-xs mb-1 py-0.5 px-1 border-l-2 border-blue-500 bg-gray-200 dark:bg-gray-900 rounded-md">
+                                                        <span
+                                                            class="text-gray-900 dark:text-white">{{ $modifier->name }}</span>
+                                                        <span
+                                                            class="text-gray-600 dark:text-gray-300">{{ currency_format($modifier->price) }}</span>
+                                                    </div>
+                                                @endforeach
                                             </div>
-                                            @endforeach
-                                        </div>
                                         @endif
 
                                     </td>
@@ -245,7 +250,7 @@
                             <div class="flex justify-between text-gray-500 text-sm dark:text-gray-400">
                                 <div>
                                     {{ $item->charge->charge_name }}
-                                    @if ($item->charge->charge_type == 'percent') 
+                                    @if ($item->charge->charge_type == 'percent')
                                         ({{ $item->charge->charge_value }}%)
                                     @endif
                                 </div>
@@ -336,10 +341,9 @@
                             @endif
                         </div>
 
-                        <!-- Secondary Actions - Utility buttons in a grid -->
                         <div class="grid grid-cols-4 gap-2">
                             <a class="min-h-[50px] rounded-xl bg-white hover:bg-gray-50 text-gray-700 border p-3 inline-flex flex-col items-center justify-center gap-1 transition-colors dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 dark:hover:bg-gray-700"
-                                href="{{ route('orders.print', $order->id) }}" target="_blank">
+                                onclick="printOrder('{{ route('orders.print', $order->id) }}')">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="currentColor"
                                     viewBox="0 0 16 16">
                                     <path d="M2.5 8a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1" />
@@ -363,16 +367,16 @@
                             @endif
 
                             @if (user_can('Delete Order'))
-                            <button
-                            class="min-h-[50px] rounded-xl bg-red-500 hover:bg-red-600 text-white p-3 inline-flex flex-col items-center justify-center gap-1 transition-colors"
-                                wire:click="$toggle('deleteOrderModal')">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none"
-                                    viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                                </svg>
-                                <span class="text-sm font-medium">@lang('app.delete')</span>
-                            </button>
+                                <button
+                                    class="min-h-[50px] rounded-xl bg-red-500 hover:bg-red-600 text-white p-3 inline-flex flex-col items-center justify-center gap-1 transition-colors"
+                                    wire:click="$toggle('deleteOrderModal')">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none"
+                                        viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                                    </svg>
+                                    <span class="text-sm font-medium">@lang('app.delete')</span>
+                                </button>
                             @endif
 
 
@@ -440,13 +444,17 @@
                                                     @break
 
                                                     @case('upi')
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-qr-code-scan" viewBox="0 0 16 16">
-                                                        <path d="M0 .5A.5.5 0 0 1 .5 0h3a.5.5 0 0 1 0 1H1v2.5a.5.5 0 0 1-1 0zm12 0a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-1 0V1h-2.5a.5.5 0 0 1-.5-.5M.5 12a.5.5 0 0 1 .5.5V15h2.5a.5.5 0 0 1 0 1h-3a.5.5 0 0 1-.5-.5v-3a.5.5 0 0 1 .5-.5m15 0a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1 0-1H15v-2.5a.5.5 0 0 1 .5-.5M4 4h1v1H4z"/>
-                                                        <path d="M7 2H2v5h5zM3 3h3v3H3zm2 8H4v1h1z"/>
-                                                        <path d="M7 9H2v5h5zm-4 1h3v3H3zm8-6h1v1h-1z"/>
-                                                        <path d="M9 2h5v5H9zm1 1v3h3V3zM8 8v2h1v1H8v1h2v-2h1v2h1v-1h2v-1h-3V8zm2 2H9V9h1zm4 2h-1v1h-2v1h3zm-4 2v-1H8v1z"/>
-                                                        <path d="M12 9h2V8h-2z"/>
-                                                    </svg>
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                                            fill="currentColor" class="bi bi-qr-code-scan"
+                                                            viewBox="0 0 16 16">
+                                                            <path
+                                                                d="M0 .5A.5.5 0 0 1 .5 0h3a.5.5 0 0 1 0 1H1v2.5a.5.5 0 0 1-1 0zm12 0a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-1 0V1h-2.5a.5.5 0 0 1-.5-.5M.5 12a.5.5 0 0 1 .5.5V15h2.5a.5.5 0 0 1 0 1h-3a.5.5 0 0 1-.5-.5v-3a.5.5 0 0 1 .5-.5m15 0a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1 0-1H15v-2.5a.5.5 0 0 1 .5-.5M4 4h1v1H4z" />
+                                                            <path d="M7 2H2v5h5zM3 3h3v3H3zm2 8H4v1h1z" />
+                                                            <path d="M7 9H2v5h5zm-4 1h3v3H3zm8-6h1v1h-1z" />
+                                                            <path
+                                                                d="M9 2h5v5H9zm1 1v3h3V3zM8 8v2h1v1H8v1h2v-2h1v2h1v-1h2v-1h-3V8zm2 2H9V9h1zm4 2h-1v1h-2v1h3zm-4 2v-1H8v1z" />
+                                                            <path d="M12 9h2V8h-2z" />
+                                                        </svg>
                                                     @break
 
                                                     @case('card')
@@ -493,8 +501,7 @@
                         </svg>
                         @lang('modules.customer.address')
                     </div>
-                    <div
-                        class="flex text-sm">
+                    <div class="flex text-sm">
                         {!! nl2br($order->delivery_address) !!}
                     </div>
                 @endif
@@ -503,9 +510,9 @@
         </x-slot>
 
         <x-slot name="footer">
-                        <x-secondary-button wire:click="$set('showOrderDetail', false)" wire:loading.attr="disabled">
-                            {{ __('app.close') }}
-                        </x-secondary-button>
+            <x-secondary-button wire:click="$set('showOrderDetail', false)" wire:loading.attr="disabled">
+                {{ __('app.close') }}
+            </x-secondary-button>
         </x-slot>
     </x-right-modal>
 
@@ -566,7 +573,19 @@
                 </x-danger-button>
             </x-slot>
         </x-confirmation-modal>
-
     @endif
 
+    <iframe id="printFrame" style="display:none;"></iframe>
 </div>
+@script
+    <script>
+        window.printOrder = function(url) {
+            var iframe = document.getElementById('printFrame');
+            iframe.src = url;
+
+            iframe.onload = function() {
+                iframe.contentWindow.focus();
+            };
+        }
+    </script>
+@endscript

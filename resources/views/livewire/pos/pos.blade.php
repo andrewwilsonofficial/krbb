@@ -137,10 +137,7 @@
         });
 
         $wire.on('print_location', (url) => {
-            const anchor = document.createElement('a');
-            anchor.href = url;
-            anchor.target = '_blank';
-            anchor.click();
+            printOrder(url);
         });
 
     </script>

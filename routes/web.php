@@ -154,5 +154,5 @@ Route::post('/webhook/save-razorpay-webhook/{hash?}', [RazorpayWebhookController
 Route::view('offline', 'offline');
 
 Route::get('test', function () {
-    dd( public_path(Files::UPLOAD_FOLDER));
+    dd(public_path(Files::UPLOAD_FOLDER));
 });
