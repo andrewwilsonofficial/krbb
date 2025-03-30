@@ -43,7 +43,7 @@ class QrCodes extends Component
 
         $table->generateQrCode();
 
-        $this->redirect(route('qrcodes.index'));
+        // $this->redirect(route('qrcodes.index'));
     }
 
     public function render()
