@@ -53,7 +53,7 @@ class Table extends Model
 
     public function getQrCodeFileName(): string
     {
-        return 'qrcode-' . $this->branch_id . '-' . str()->slug($this->table_code) . '-' . uniqid() . '.png';
+        return 'qrcode-' . $this->branch_id . '-' . str()->slug($this->table_code) . '.png';
     }
 
     public function getRestaurantId(): int
