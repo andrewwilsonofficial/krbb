@@ -26,7 +26,7 @@ class Branch extends Model
 
     public function getQrCodeFileName(): string
     {
-        return 'qrcode-branch-' . $this->id . '-' . $this->restaurant->id . '-' . uniqid() . '.png';
+        return 'qrcode-branch-' . $this->id . '-' . $this->restaurant->id . '.png';
     }
 
     public function getRestaurantId(): int
